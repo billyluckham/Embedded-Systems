@@ -32,7 +32,7 @@ int main()
     printf("The time taken was %llu milliseconds\n", dur);    
 
     //Now to use a timer to implement a delay
-    tmr1.start();
+    //tmr1.start();
     while (true) {
         /*
         //Wait for switch press
