@@ -1,0 +1,6 @@
+#ifndef __Switch_Timer_State_Machine__
+#define __Switch_Timer_State_Machine__
+
+class Switch_Timer_State_Machine;
+
+#endif

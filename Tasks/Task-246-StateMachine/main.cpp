@@ -15,14 +15,51 @@ DigitalOut greenLED(TRAF_GRN1_PIN);     //Green Traffic 1
 LatchedLED disp(LatchedLED::SEVEN_SEG);
 
 //Timers
-Timer tmrA;
-Timer tmrB;
 Timer tmrLED;
+//Timer tmrA;
+//Timer tmrB;
+
+//State machines for buttons
+Switch_Timer_State_Machine switchA(BTN1_PIN, Switch_Timer_State_Machine :: UP);
+Switch_Timer_State_Machine switchB(BTN2_PIN,Switch_Timer_State_Machine :: DOWN);
+
+microseconds timeLED;
+
 
 int main()
 {
-    volatile int count = 0;
+    int count = 0;
 
+    disp.enable(true);
+    disp = 0;
+    
+    //Start LED timer
+    tmrLED.start();
+    disp = count;
+
+    while(true){
+
+         timeLED = tmrLED.elapsed_time();
+        switchA.readInputs();
+        switchB.readInputs();
+
+        // **********************************
+        // UPDATE "STATE" for buttons A and B
+        // **********************************
+        switchA.updateState(count);
+        switchB.updateState(count);
+
+    }
+
+        if (timeLED >= 250ms) {
+             greenLED = !greenLED;
+             tmrLED.reset();
+         }
+
+        disp = count;
+}
+
+/*
     // This little C++ trick allows us to use BOTH BusIn and DigitalIn
     DigitalIn& buttonA = buttons[0];    //ButtonA is synonamous with buttons[0]
     DigitalIn& buttonB = buttons[1];
@@ -169,7 +206,7 @@ int main()
         }
   
     }
-}
+} */
 
 
 
