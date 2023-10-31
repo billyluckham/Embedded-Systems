@@ -1,8 +1,14 @@
 #include "mbed.h"
 #include "TrafficLight.h"
+#include <cstdio>
 
 TrafficLight lights;
 DigitalIn sw(USER_BUTTON);
+DigitalIn btnA(Btn_A);
+DigitalIn btnB(Btn_B);
+DigitalIn btnC(Btn_C);
+DigitalIn btnD(Btn_D);
+
 
 TrafficLight::LIGHT_STATE s;
 
@@ -24,7 +30,8 @@ int main()
 
         //Switch debounce
         wait_us(300000);
-        
+
+                
     }
 }
 

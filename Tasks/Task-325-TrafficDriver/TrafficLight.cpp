@@ -12,6 +12,20 @@ TrafficLight::TrafficLight(PinName redPin, PinName yellowPin, PinName greenPin)
     flashYellow(false);
 }
 
+void TrafficLight:: setFlashSpeed(double speed) {
+        // Validate speed to ensure it's non-negative
+        flashSpeed = (speed >= 0) ? speed : 0;
+        // Update flash speed if the flasher is currently on
+        if (State == WARNING) {
+            flashYellow(true);
+        }
+}
+
+void TrafficLight:: stop(){
+        State = WARNING;
+        updateOutput();
+}
+
 //Destructor
 TrafficLight::~TrafficLight()
 {
