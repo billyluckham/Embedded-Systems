@@ -9,13 +9,23 @@ DigitalIn btnB(Btn_B);
 DigitalIn btnC(Btn_C);
 DigitalIn btnD(Btn_D);
 
+int n = 0;
 
 TrafficLight::LIGHT_STATE s;
 
 int main()
 {
     while (true) {
-
+        
+        if(btnB == 1){
+            n = n + 10;
+            printf("n = %i", n);
+        } 
+        if (btnC == 1) {
+            n = n - 10;
+            printf("n = %i", n);
+        }
+        
         //Wait for switch press
         while (sw==0);
 
