@@ -8,6 +8,8 @@ int main()
     DoubleNumber  d0(3.0);
     ComplexNumber c1;
     DoubleNumber  d1;
+    ComplexNumber c2(2.0, 3.0);
+    ComplexNumber c3(2.0, 1.0);
     
     //This uses the operator= function
     d1 = 5.0;
@@ -27,6 +29,9 @@ int main()
     //TODO - write an overloaded + operator
     DoubleNumber sum1 = c0 + c1 + d0 + d1;
     cout << sum1 << endl;
+
+    ComplexNumber sum2 = c3 + c2;
+    cout << c3.asString() << endl;
 
     while (true) {
 
