@@ -9,7 +9,7 @@ DigitalOut led1(LED1);
 DigitalOut led2(LED2);
 AnalogIn pot(AN_POT_PIN);
 
-#define N 64
+#define N 20
 
 int main()
 {
