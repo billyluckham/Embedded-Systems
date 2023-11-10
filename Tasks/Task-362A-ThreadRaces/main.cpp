@@ -21,6 +21,7 @@ LCD_16X2_DISPLAY disp;
 //Additional Threads
 Thread t1;
 Thread t2;
+Mutex mutex;
 
 //Shared mutable state
 volatile long long counter = 0; //Volatile means it must be stored in memory
@@ -31,6 +32,7 @@ void countUp()
     //RED MEANS THE COUNT UP FUNCTION IS IN ITS CRITICAL SECTION
     green_led = 1;
     for (unsigned int n=0; n<N; n++) {
+        mutex.lock();
         counter++; 
         counter++;
         counter++;
@@ -40,7 +42,8 @@ void countUp()
         counter++;
         counter++;
         counter++;
-        counter++;           
+        counter++;   
+        mutex.unlock();
     }  
     green_led = 0; 
     
@@ -52,6 +55,7 @@ void countDown()
     //YELLOW MEANS THE COUNT DOWN FUNCTION IS IN ITS CRITICAL SECTION
     yellow_led = 1;
     for (unsigned int n=0; n<N; n++) {
+        mutex.lock();
         counter--;
         counter--;
         counter--;
@@ -61,7 +65,8 @@ void countDown()
         counter--;
         counter--;
         counter--;
-        counter--;           
+        counter--;
+        mutex.unlock();           
     }
     yellow_led = 0;
     
