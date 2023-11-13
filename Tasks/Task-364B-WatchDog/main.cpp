@@ -60,20 +60,20 @@ void task1() {
     while(true) {
 
         while (sw1 == 0) {};            //BLOCKS via SPINNING
-        m1.lock();
+        //m1.lock();
         
         isAlive(THREAD1);
         ThisThread::sleep_for(50ms);    //Blocks in the WAITING state
 
-        m2.lock();      //For demo
+        //m2.lock();      //For demo
         while (sw1 == 1) {};            //BLOCKS via SPINNING
-        m2.unlock();    //For demo
+        //m2.unlock();    //For demo
 
         isAlive(THREAD1);
         red_led = !red_led;             
         ThisThread::sleep_for(50ms);    //Blocks in the WAITING state
 
-        m1.unlock();    //For demo
+        //m1.unlock();    //For demo
     }    
 }
 
@@ -86,20 +86,20 @@ void task2()
     while(true) {
 
         button2.waitForPress();         //Blocks in the WAITING state 
-        m2.lock();      //For demo
+        //m2.lock();      //For demo
 
         isAlive(THREAD2);
         ThisThread::sleep_for(50ms);    //Blocks in the WAITING state
 
-        m1.lock();
+       // m1.lock();
         button2.waitForRelease();       //Blocks in the WAITING state
-        m1.unlock();
+        //m1.unlock();
 
         isAlive(THREAD2);
         green_led = !green_led;         
         ThisThread::sleep_for(50ms);    //Blocks in the WAITING state
 
-        m2.unlock();
+        //m2.unlock();
     }    
 }
 
