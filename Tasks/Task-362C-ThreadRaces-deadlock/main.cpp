@@ -34,7 +34,7 @@ void countUp()
     //RED MEANS THE COUNT UP FUNCTION IS IN ITS CRITICAL SECTION
     green_led = 1;
     for (unsigned int n=0; n<N; n++) {
-        counterLock.lock();
+        counterLock.trylock_for(5s);
         counter++; 
         counter++;
         counter++;
@@ -57,7 +57,7 @@ void countDown()
     //YELLOW MEANS THE COUNT DOWN FUNCTION IS IN ITS CRITICAL SECTION
     yellow_led = 1;
     for (unsigned int n=0; n<N; n++) {
-        counterLock.lock();
+        counterLock.trylock_for(5s);
         counter--;
         counter--;
         counter--;
