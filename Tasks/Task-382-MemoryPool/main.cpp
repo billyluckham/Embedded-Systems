@@ -46,7 +46,7 @@ void switchISR() {
     //Grab switch state
     uint32_t switch1State = buttonA;
     uint32_t switch2State = buttonB;
-    
+
     //Allocate a block from the memory pool (non blocking)
     message_t* message = mpool.try_alloc();
     if (message == NULL) {
@@ -59,6 +59,10 @@ void switchISR() {
     message->fValue = sample;
     message->sw1State = switch1State;
     message->sw2State = switch2State;
+
+    // while(buttonA == 1){                    //Busy wait, if held for too long buffer not being read and emptied
+    //         wait_us(500);                   //Therefore buffer overfills amd turns on red LED
+    //  }
     
     //Write to queue
     bool ok = queue.try_put(message);    //Note we are sending the "pointer"
@@ -80,6 +84,10 @@ void thread1()
         //Block on the queue
         bool ok = queue.try_get_for(10s, &payload);
         
+        // while(buttonB == 1){                    //Busy wait, if held for too long buffer not being read and emptied
+        //  wait_us(500);                   //Therefore buffer overfills amd turns on red LED
+        // }
+
         //Check status
         if (ok) {
             //Make a copy
@@ -105,13 +113,13 @@ int main() {
     redLED    = 0;
     yellowLED = 0;
     greenLED  = 0;
-           
+      
     //Start message
     printf("Welcome\n");           
    
     //Hook up interrupts   
     Ticker timer; 
-    timer.attach(&switchISR, 100ms);
+    timer.attach(&switchISR, 300ms);
                
     //Threads
     t1.start(thread1);

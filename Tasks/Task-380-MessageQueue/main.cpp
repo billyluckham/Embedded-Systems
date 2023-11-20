@@ -18,7 +18,7 @@ void switchISR();
 //Threads
 Thread t1;
 
-//Queues - "A message can be a integer or pointer value  to a certain type T that is sent to a thread or interrupt service routine."
+//Queues - "A message can be a integer or pointer value to a certain type T that is sent to a thread or interrupt service routine."
 Queue<uint32_t, 10> queue;
 
 // Call this on precise intervals
