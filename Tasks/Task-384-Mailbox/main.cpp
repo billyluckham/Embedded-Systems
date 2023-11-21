@@ -16,6 +16,9 @@ void switchISR();
 //Threads
 Thread t1;
 
+// Mutex
+Mutex mailMutex;
+
 //Class type
 class message_t {
 public:    
@@ -66,19 +69,6 @@ void switchISR() {
     //Write pointer to the queue
     osStatus stat = mail_box.put(message);    //Note we are sending the "pointer" not the data
     
-    /*
-    typedef enum {
-    osOK                      =  0,         ///< Operation completed successfully.
-    osError                   = -1,         ///< Unspecified RTOS error: run-time error but no other error message fits.
-    osErrorTimeout            = -2,         ///< Operation not completed within the timeout period.
-    osErrorResource           = -3,         ///< Resource not available.
-    osErrorParameter          = -4,         ///< Parameter error.
-    osErrorNoMemory           = -5,         ///< System is out of memory: it was impossible to allocate or reserve memory for the operation.
-    osErrorISR                = -6,         ///< Not allowed in ISR context: the function cannot be called from interrupt service routines.
-    osStatusReserved          = 0x7FFFFFFF  ///< Prevents enum down-size compiler optimization.
-    } osStatus_t;
-    */
-
     //Check if succesful
     if (stat != osOK) {
         redLED = 1; 
@@ -100,11 +90,14 @@ void thread1()
         //Also consider this
         //payload = mail_box.try_get_for(10s);
 
+        mailMutex.lock();
         //Check status
         if (payload) {
             //Make a copy
             message_t msg(payload->fValue, payload->sw1State, payload->sw2State);
             //We are done with this, so give back the memory to the pool
+            
+            
             mail_box.free(payload);
             
             //Echo to the terminal
@@ -115,7 +108,8 @@ void thread1()
             //ERROR HANDLER TO BE DONE
 
         }
-             
+        mailMutex.unlock();  
+
     } //end while
 }
 

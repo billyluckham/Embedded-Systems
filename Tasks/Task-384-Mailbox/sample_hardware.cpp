@@ -14,6 +14,7 @@ DigitalIn  onBoardSwitch(USER_BUTTON);
 DigitalIn  buttonA(BTN1_PIN);
 DigitalIn  buttonB(BTN2_PIN);
 
+
 //POWER ON SELF TEST
 void post() 
 {
